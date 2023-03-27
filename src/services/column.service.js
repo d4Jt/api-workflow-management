@@ -27,8 +27,15 @@ const updateOne = async (id, data) => {
       if (updateData.cards) delete updateData.cards;
       const updatedColumn = await ColumnModel.updateOne(id, updateData);
 
-      if (updatedColumn.data._destroy)
-         await CardModel.updateMany(updatedColumn.data.cardOrder);
+      if (updatedColumn.data._destroy) {
+         await CardModel.updateMany(updatedColumn.data.cardOrder, {
+            _destroy: true,
+         });
+      } else {
+         await CardModel.updateMany(updatedColumn.data.cardOrder, {
+            _destroy: false,
+         });
+      }
 
       return updatedColumn;
    } catch (err) {

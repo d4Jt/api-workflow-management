@@ -59,6 +59,10 @@ const updateOne = async (id, data) => {
          for (const column of updatedBoard.data.columnOrder) {
             await ColumnService.updateOne(column, { _destroy: true });
          }
+      } else {
+         for (const column of updatedBoard.data.columnOrder) {
+            await ColumnService.updateOne(column, { _destroy: false });
+         }
       }
 
       return updatedBoard;

@@ -44,7 +44,7 @@ const createNew = async (data) => {
 /**
  * @param {Array of string card id} ids
  */
-const updateMany = async (ids) => {
+const updateMany = async (ids, data) => {
    try {
       const transformIds = ids.map((id) => new ObjectId(id));
       const result = await getDB()
@@ -53,7 +53,7 @@ const updateMany = async (ids) => {
             {
                _id: { $in: transformIds },
             },
-            { $set: { _destroy: true } }
+            { $set: data }
          );
 
       return result;
